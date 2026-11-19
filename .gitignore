@@ -24,6 +24,11 @@ Thumbs.db
 
 # Personal files (syllabus, rubric, notes) — not part of the project
 reference/
+*.zip
+# Project report and presentation (kept private, not on GitHub)
+report/
+*.pptx
+main*.pdf
 *.pdf
 CLAUDE.md
 .claude/
