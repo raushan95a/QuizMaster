@@ -28,6 +28,7 @@ reference/
 # Project report and presentation (kept private, not on GitHub)
 report/
 *.pptx
+*.docx
 main*.pdf
 *.pdf
 CLAUDE.md
