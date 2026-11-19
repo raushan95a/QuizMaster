@@ -20,11 +20,15 @@ public final class SceneManager {
     public static void init(Stage primaryStage) {
         stage = primaryStage;
         scene = new Scene(new javafx.scene.layout.Pane(), 1000, 650);
-        String css = App.class.getResource("/client/styles.css").toExternalForm();
-        scene.getStylesheets().add(css);
+        scene.getStylesheets().add(stylesheet());
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(550);
+    }
+
+    /** The CSS file; dialogs add it too, since they are separate windows. */
+    public static String stylesheet() {
+        return App.class.getResource("/client/styles.css").toExternalForm();
     }
 
     public static void show(Parent root, String title) {

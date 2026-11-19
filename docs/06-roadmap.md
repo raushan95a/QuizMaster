@@ -14,10 +14,10 @@ Finish the four steps completely before any stretch goal. Tick items only when t
 - [ ] Deploy server online; client logs in against the hosted URL
 
 ## Step 2 — Admin
-- [ ] `QuizDAO`, `QuestionDAO`, `QuizService` + admin endpoints + tests
-- [ ] Sample quiz "Java Basics" seeded in dev
-- [ ] Admin Dashboard (`ToolBar`, `TableView`)
-- [ ] Quiz Editor + question dialog; publish / unpublish
+- [x] `QuizDAO`, `QuestionDAO`, `QuizService` + admin endpoints + tests
+- [x] Sample quiz "Java Basics" seeded in dev
+- [x] Admin Dashboard (`ToolBar`, `TableView`)
+- [x] Quiz Editor + question dialog; publish / unpublish
 
 ## Step 3 — Student
 - [ ] Start attempt (shuffled, no answers sent), progress, submit + grading (transaction) + tests

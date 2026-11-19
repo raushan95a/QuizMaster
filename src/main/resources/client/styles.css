@@ -67,3 +67,32 @@
 .error-label {
     -fx-text-fill: -danger;
 }
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.tool-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+}
+
+.table-view, .list-view {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e5e7eb;
+}
+
+.table-row-cell:selected, .list-cell:filled:selected {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: -text;
+}
+
+.text-area {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #d1d5db;
+}
