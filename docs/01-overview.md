@@ -76,3 +76,6 @@ live link sees the leaderboard update in real time.
 - [ ] Import questions from CSV
 - [ ] Dark / light theme
 - [ ] QR code of the live link
+- [ ] **Auto-generate a quiz from a unit PPT:** admin uploads a `.pptx` → server extracts the slide text
+      (Apache POI) → an AI service drafts MCQs → saved as an **unpublished draft** that the faculty reviews and
+      edits before publishing. Needs an AI API key (paid) and internet on the server.

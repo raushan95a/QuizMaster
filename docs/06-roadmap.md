@@ -4,13 +4,13 @@ Rubric (A4. Project — 15 marks): idea & features 3–5 · partial 4–10 · fu
 Finish the four steps completely before any stretch goal. Tick items only when they work end-to-end.
 
 ## Step 1 — Server, database, login (+ first deploy)
-- [ ] Maven project + wrapper, `.gitignore`, GitHub repo
-- [ ] Models (`User`, `Admin`, `Student`, `Role`), DTOs, exceptions
-- [ ] `DatabaseManager` + `schema.sql` + admin seeding
-- [ ] `PasswordUtil` (PBKDF2), `SessionStore`, `UserDAO` (`Repository<T>`), `AuthService` + tests
-- [ ] Server: `/health`, register, login, logout, me; error handling
-- [ ] Client: `ApiClient`, `Session`, Login + Register screens, placeholder dashboards with logout
-- [ ] Dockerfile (used by the host automatically)
+- [x] Maven project + wrapper, `.gitignore`, GitHub repo
+- [x] Models (`User`, `Admin`, `Student`, `Role`), DTOs, exceptions
+- [x] `DatabaseManager` + `schema.sql` + admin seeding
+- [x] `PasswordUtil` (PBKDF2), `SessionStore`, `UserDAO` (`Repository<T>`), `AuthService` + tests
+- [x] Server: `/health`, register, login, logout, me; error handling
+- [x] Client: `ApiClient`, `Session`, Login + Register screens, placeholder dashboards with logout
+- [x] Dockerfile (used by the host automatically)
 - [ ] Deploy server online; client logs in against the hosted URL
 
 ## Step 2 — Admin
@@ -33,6 +33,7 @@ Finish the four steps completely before any stretch goal. Tick items only when t
 
 ## Stretch
 - [ ] Charts · CSV question import · dark theme · QR code for the live link
+- [ ] Auto-generate quiz from a unit PPT (Apache POI + AI → draft quiz for faculty review) — see `01-overview.md`
 
 ## Pre-demo checklist
 - [ ] `https://<server>/health` shows `UP`; DB backup downloaded
