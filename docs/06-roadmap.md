@@ -33,7 +33,7 @@ Online deployment is postponed; the demo runs on a local server over Wi-Fi (see 
 - [x] Admin Live Results (`LiveClient`, activity log) — end-to-end test passes; check the screen by hand once
 - [x] CSV export, AWT Help window (F1), menus with image icons, `DropShadow`, CSS polish
 - [x] Server prints its Wi-Fi address for the local demo
-- [ ] Fill exact line references in `05-syllabus-mapping.md` (before the viva)
+- [x] Fill exact line references in `05-syllabus-mapping.md` (re-check after editing code)
 
 ## Stretch
 - [x] Charts — admin "Charts" screen: score-range `BarChart` + pass/fail `PieChart` + average/highest/lowest
