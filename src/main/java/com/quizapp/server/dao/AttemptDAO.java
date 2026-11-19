@@ -19,7 +19,10 @@ import java.util.Optional;
 public class AttemptDAO implements Repository<Attempt> {
 
     private static final String SELECT =
-            "SELECT a.*, q.title AS quiz_title FROM attempts a JOIN quizzes q ON q.id = a.quiz_id ";
+            "SELECT a.*, q.title AS quiz_title, u.full_name AS student_name, "
+                    + "(SELECT COUNT(*) FROM attempt_answers aa "
+                    + " WHERE aa.attempt_id = a.id AND aa.chosen_option IS NOT NULL) AS answered_count "
+                    + "FROM attempts a JOIN quizzes q ON q.id = a.quiz_id JOIN users u ON u.id = a.user_id ";
 
     private final DatabaseManager db;
 
@@ -69,6 +72,17 @@ public class AttemptDAO implements Repository<Attempt> {
     /** A student's submitted attempts, newest first. */
     public List<Attempt> findSubmittedByUser(int userId) throws QuizAppException {
         return query(SELECT + "WHERE a.user_id = ? AND a.status = 'SUBMITTED' ORDER BY a.id DESC", userId);
+    }
+
+    /** Submitted attempts of a quiz, best first (highest score, then fastest). */
+    public List<Attempt> findSubmittedByQuiz(int quizId) throws QuizAppException {
+        return query(SELECT + "WHERE a.quiz_id = ? AND a.status = 'SUBMITTED' "
+                + "ORDER BY a.score DESC, a.time_taken_sec ASC, a.id ASC", quizId);
+    }
+
+    /** Attempts of a quiz that are still being written. */
+    public List<Attempt> findInProgressByQuiz(int quizId) throws QuizAppException {
+        return query(SELECT + "WHERE a.quiz_id = ? AND a.status = 'IN_PROGRESS' ORDER BY a.id", quizId);
     }
 
     /** Attempts are only changed through submit(); a plain update is not allowed. */
@@ -203,6 +217,8 @@ public class AttemptDAO implements Repository<Attempt> {
                     a.setUnansweredCount(rs.getInt("unanswered_count"));
                     a.setTimeTakenSec(rs.getInt("time_taken_sec"));
                     a.setAutoSubmitted(rs.getInt("auto_submitted") == 1);
+                    a.setStudentName(rs.getString("student_name"));
+                    a.setAnsweredCount(rs.getInt("answered_count"));
                     attempts.add(a);
                 }
             }

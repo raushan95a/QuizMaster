@@ -9,8 +9,11 @@ import com.quizapp.server.dao.QuizDAO;
 import com.quizapp.server.dao.UserDAO;
 import com.quizapp.server.service.AuthService;
 import com.quizapp.server.service.AttemptService;
+import com.quizapp.server.service.LiveService;
 import com.quizapp.server.service.QuizService;
 import com.quizapp.server.web.AdminController;
+import com.quizapp.server.web.LiveController;
+import com.quizapp.server.web.LiveHub;
 import com.quizapp.server.web.StudentController;
 import java.time.Clock;
 import com.quizapp.server.web.Auth;
@@ -45,8 +48,11 @@ public class ServerMain {
         QuizDAO quizDAO = new QuizDAO(db);
         QuestionDAO questionDAO = new QuestionDAO(db);
         QuizService quizService = new QuizService(quizDAO, questionDAO);
-        AttemptService attemptService = new AttemptService(quizDAO, questionDAO, new AttemptDAO(db),
-                Clock.systemUTC());
+        AttemptDAO attemptDAO = new AttemptDAO(db);
+        AttemptService attemptService = new AttemptService(quizDAO, questionDAO, attemptDAO, Clock.systemUTC());
+        LiveService liveService = new LiveService(quizDAO, attemptDAO, Clock.systemUTC());
+        LiveHub liveHub = new LiveHub(liveService);
+        attemptService.setChangeListener(liveHub::publish); // every change is pushed to live viewers
 
         if (authService.ensureAdminExists(config.getAdminUsername(), config.getAdminPassword())) {
             LOG.info("Created admin account '{}'", config.getAdminUsername());
@@ -59,6 +65,7 @@ public class ServerMain {
         AuthController authController = new AuthController(authService);
         AdminController adminController = new AdminController(quizService);
         StudentController studentController = new StudentController(attemptService);
+        LiveController liveController = new LiveController(liveService);
 
         Javalin app = Javalin.create(javalin -> {
             javalin.staticFiles.add("/public", Location.CLASSPATH); // index.html, live.html
@@ -94,6 +101,11 @@ public class ServerMain {
         app.post("/api/attempts/{id}/submit", studentController::submit);
         app.get("/api/attempts/{id}/review", studentController::review);
         app.get("/api/me/attempts", studentController::history);
+
+        app.get("/api/admin/quizzes/{id}/results", liveController::results);
+        app.get("/api/live", liveController::quizzes);
+        app.get("/api/live/{id}", liveController::state);
+        app.ws("/ws/live", liveHub::configure);
 
         // Errors -> {"error": "..."} with the right status code.
         // e.getHttpStatus() is resolved at runtime by the real exception class (dynamic method dispatch).

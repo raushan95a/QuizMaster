@@ -20,6 +20,8 @@ public class Attempt implements Gradable {
     private int unansweredCount;
     private int timeTakenSec;
     private boolean autoSubmitted;
+    private String studentName;  // filled when loaded from the database
+    private int answeredCount;   // how many questions have a saved answer
 
     public Attempt() {
     }
@@ -150,5 +152,21 @@ public class Attempt implements Gradable {
 
     public void setAutoSubmitted(boolean autoSubmitted) {
         this.autoSubmitted = autoSubmitted;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public int getAnsweredCount() {
+        return answeredCount;
+    }
+
+    public void setAnsweredCount(int answeredCount) {
+        this.answeredCount = answeredCount;
     }
 }

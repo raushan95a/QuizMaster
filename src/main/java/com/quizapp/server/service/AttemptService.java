@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.IntConsumer;
 
 /** Taking a quiz: start, auto-save, submit + grading, review, history. */
 public class AttemptService {
@@ -37,12 +38,18 @@ public class AttemptService {
     private final QuestionDAO questionDAO;
     private final AttemptDAO attemptDAO;
     private final Clock clock;
+    /** Told the quiz id whenever an attempt starts, saves or submits (used for live updates). */
+    private IntConsumer changeListener = quizId -> { };
 
     public AttemptService(QuizDAO quizDAO, QuestionDAO questionDAO, AttemptDAO attemptDAO, Clock clock) {
         this.quizDAO = quizDAO;
         this.questionDAO = questionDAO;
         this.attemptDAO = attemptDAO;
         this.clock = clock;
+    }
+
+    public void setChangeListener(IntConsumer listener) {
+        this.changeListener = listener;
     }
 
     /** Published quizzes for the student dashboard (questions are not included). */
@@ -78,6 +85,7 @@ public class AttemptService {
             views.add(QuestionView.from(q)); // no correct answers leave the server
         }
 
+        changeListener.accept(quizId);
         return new StartAttemptResponse(attempt.getId(), quiz.getTitle(), quiz.getTimeLimitMin() * 60,
                 (int) Math.max(0, secondsLeft(attempt, quiz)), views, attemptDAO.findAnswers(attempt.getId()));
     }
@@ -94,6 +102,7 @@ public class AttemptService {
         }
         Map<Integer, String> clean = cleanAnswers(answers, questionDAO.findByQuiz(quiz.getId()));
         attemptDAO.saveAnswers(attemptId, clean);
+        changeListener.accept(quiz.getId());
         return clean.size();
     }
 
@@ -168,7 +177,9 @@ public class AttemptService {
         attempt.setAutoSubmitted(autoSubmitted);
         attempt.setSubmittedAt(end.toString());
 
-        attemptDAO.submit(attempt, newAnswers);
+        if (attemptDAO.submit(attempt, newAnswers)) {
+            changeListener.accept(quiz.getId());
+        }
         // Reload: if another request submitted first, this returns that stored result instead
         return ResultDto.from(attemptDAO.findById(attempt.getId()).orElseThrow(() -> new NotFoundException("Attempt")));
     }
