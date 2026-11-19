@@ -53,6 +53,11 @@ public final class ApiClient {
         return send(request(path).PUT(jsonBody(body)), JSON.constructType(type));
     }
 
+    /** PUT when no response body is needed. */
+    public static void put(String path, Object body) throws QuizAppException {
+        send(request(path).PUT(jsonBody(body)), null);
+    }
+
     public static void delete(String path) throws QuizAppException {
         send(request(path).DELETE(), null);
     }

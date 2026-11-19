@@ -20,10 +20,11 @@ Finish the four steps completely before any stretch goal. Tick items only when t
 - [x] Quiz Editor + question dialog; publish / unpublish
 
 ## Step 3 — Student
-- [ ] Start attempt (shuffled, no answers sent), progress, submit + grading (transaction) + tests
-- [ ] Student Dashboard, Quiz screen, `QuizTimer`, keys 1–4 / ←/→
-- [ ] `AnswerQueue` + `AutoSaveThread` (wait/notify, backup file)
-- [ ] Result (animation), Review, History
+- [x] Start attempt (shuffled, no answers sent), progress, submit + grading (transaction) + tests
+- [x] Student Dashboard, Quiz screen, `QuizTimer`, keys 1–4 / ←/→
+- [x] `AnswerQueue` + `AutoSaveThread` (wait/notify, backup file)
+- [x] Result (animation), Review, History
+- [x] Resume an unfinished attempt (same question order, saved answers, remaining time)
 
 ## Step 4 — Live + polish
 - [ ] `LiveHub` WebSocket `/ws/live` + `GET /api/live/{quizId}` + `live.html`

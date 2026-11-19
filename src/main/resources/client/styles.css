@@ -91,6 +91,137 @@
     -fx-text-fill: -text;
 }
 
+/* ---- student screens ---- */
+
+.card-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.card-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 6 4 6 4;
+}
+
+.quiz-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 14 18 14 18;
+}
+
+.card-list .list-cell:filled:selected .quiz-card {
+    -fx-background-color: #dbeafe;
+    -fx-border-color: -primary;
+    -fx-border-radius: 10;
+}
+
+.card-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.timer {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.timer-warning {
+    -fx-text-fill: -danger;
+}
+
+.question-text {
+    -fx-font-size: 19px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text;
+}
+
+.option {
+    -fx-font-size: 16px;
+    -fx-padding: 10 12 10 12;
+    -fx-background-color: #f9fafb;
+    -fx-background-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.option:selected {
+    -fx-background-color: #dbeafe;
+    -fx-border-color: -primary;
+}
+
+.nav-button {
+    -fx-min-width: 34px;
+    -fx-background-radius: 6;
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6;
+}
+
+.nav-button.answered {
+    -fx-background-color: #bbf7d0;
+    -fx-border-color: #16a34a;
+}
+
+.nav-button.current {
+    -fx-border-color: -primary;
+    -fx-border-width: 2;
+    -fx-font-weight: bold;
+}
+
+.score-big {
+    -fx-font-size: 56px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary;
+}
+
+.score-percent {
+    -fx-font-size: 22px;
+    -fx-text-fill: -muted;
+}
+
+.stat-number {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.stat-good {
+    -fx-text-fill: #16a34a;
+    -fx-font-weight: bold;
+}
+
+.stat-bad {
+    -fx-text-fill: -danger;
+    -fx-font-weight: bold;
+}
+
+.stat-neutral {
+    -fx-text-fill: -muted;
+    -fx-font-weight: bold;
+}
+
+.review-option {
+    -fx-padding: 6 10 6 10;
+    -fx-background-radius: 6;
+}
+
+.review-correct {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #166534;
+    -fx-font-weight: bold;
+}
+
+.review-wrong {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+}
+
+.plain-scroll, .plain-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
 .text-area {
     -fx-background-radius: 8;
     -fx-border-radius: 8;

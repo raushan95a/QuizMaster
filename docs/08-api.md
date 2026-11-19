@@ -33,13 +33,15 @@ Errors: `{"error": "message"}` with status 400 / 401 / 403 / 404 / 409 / 500.
 | Method | Path | Body → Response |
 |---|---|---|
 | GET | `/api/quizzes` | → published quizzes |
-| POST | `/api/quizzes/{id}/start` | → `{attemptId, timeLimitSec, questions:[{id, text, optionA..D}]}` (shuffled, **no correct answers**) |
-| PUT | `/api/attempts/{id}/progress` | `{answers:{"12":"B"}}` → 204 (saves answers, pushes live update) |
-| POST | `/api/attempts/{id}/submit` | `{answers:{…}, autoSubmitted}` → `{score, total, percentage, correct, wrong, unanswered, timeTakenSec}` |
-| GET | `/api/attempts/{id}/review` | → `[{text, options, chosen, correct}]` (only after submit) |
-| GET | `/api/me/attempts` | → own history |
+| POST | `/api/quizzes/{id}/start` | → `{attemptId, quizTitle, timeLimitSec, secondsLeft, questions:[{id, text, optionA..D}], savedAnswers:{"12":"B"}}` (shuffled, **no correct answers**). Resumes the student's unfinished attempt if time is left. |
+| PUT | `/api/attempts/{id}/progress` | `{answers:{"12":"B"}}` → `{saved: n}` (auto-save; 400 "Time is over" after deadline + 30 s) |
+| POST | `/api/attempts/{id}/submit` | `{answers:{…}, autoSubmitted}` → `{attemptId, quizId, quizTitle, score, total, percentage, correct, wrong, unanswered, timeTakenSec, autoSubmitted, submittedAt}` |
+| GET | `/api/attempts/{id}/review` | → `[{text, optionA..D, chosen, correct}]` (owner or admin, only after submit) |
+| GET | `/api/me/attempts` | → own submitted results (same shape as submit) |
 
-A submit arriving more than 30 s after the time limit → 409 "Time is over".
+Submit is safe to repeat (returns the stored result). A submit arriving more than 30 s after the time limit is
+still accepted, but only the answers auto-saved in time are graded and it is marked auto-submitted.
+An unfinished attempt whose time ran out is graded automatically when the student starts that quiz again.
 
 ## LiveState
 ```json

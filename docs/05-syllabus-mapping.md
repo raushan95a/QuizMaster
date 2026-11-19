@@ -5,13 +5,13 @@ For the viva. Replace class names with exact `File.java:line` references as code
 ## Unit 1 — Java basics and inheritance
 | Topic | Where |
 |---|---|
-| Data types, arrays, operators, control statements | Grading loop in `AttemptService`; `char[] OPTIONS = {'A','B','C','D'}` |
+| Data types, arrays, operators, control statements | Grading loop in `AttemptService.finish()`; `Question.OPTIONS` (`char[]`); `switch` in `Question.optionText()`; `RadioButton[]` in `QuizView` |
 | Classes, objects, constructors, methods, `this` | `model` classes |
 | `static` | `PasswordUtil`, `Config.load()`, `AlertUtil`, `Session` |
 | `final` | Constants (`DEFAULT_PORT`, `GRACE_SECONDS`), `final class PasswordUtil` |
 | Inheritance, member access | `Admin` / `Student` extend `User` (`protected` fields) |
 | Abstract class | `User` |
-| Interface | `Repository<T>`, `Gradable` |
+| Interface | `Repository<T>`; `Gradable` (with a `default getPercentage()` method), implemented by `Attempt` and `ResultDto` |
 | Multilevel hierarchy, `super` | `Exception` → `QuizAppException` → `InvalidLoginException`; `super(message)` |
 | Packages, access specifiers | `com.quizapp.model / server / client …`; private fields + public getters |
 
@@ -51,8 +51,8 @@ For the viva. Replace class names with exact `File.java:line` references as code
 | HashMap, Hashtable | answers `HashMap<Integer, Character>`; `SessionStore` (`ConcurrentHashMap`, compared with `Hashtable`) |
 | Vector | activity list in `LiveResultsView` (legacy synchronized list) |
 | ConcurrentHashMap / Set | `LiveHub` subscribers per quiz (thread-safe, used by WebSocket threads) |
-| Iterator | grading loop over answers |
-| `Collections.shuffle` | shuffling questions per attempt |
+| Iterator | `AttemptService.cleanAnswers()` walks the answer map with an `Iterator` |
+| `Collections.shuffle` | `AttemptService.start()` — `shuffle(list, new Random(attemptId))`: new order per attempt, same order on resume |
 
 ## Unit 5 — Generics and JavaFX
 | Topic | Where |
