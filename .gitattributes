@@ -1,0 +1,6 @@
+# Keep Unix line endings for the wrapper script (used by the Linux build on the host)
+mvnw    text eol=lf
+*.cmd   text eol=crlf
+*.java  text
+*.sql   text
+*.md    text

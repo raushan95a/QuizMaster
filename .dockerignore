@@ -1,0 +1,10 @@
+target/
+data/
+autosave/
+docs/
+.git/
+.idea/
+.vscode/
+*.pdf
+*.png
+*.md

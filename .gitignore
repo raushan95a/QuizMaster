@@ -1,0 +1,30 @@
+# Build output
+target/
+
+# Local database, backups and auto-save files
+data/
+autosave/
+*.db
+*.db-shm
+*.db-wal
+
+# Local client settings
+config.properties
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+out/
+.DS_Store
+Thumbs.db
+*.log
+
+# Personal files (not part of the project)
+*.pdf
+image.png
+CLAUDE.md
+.claude/
