@@ -3,12 +3,16 @@ package com.quizapp.server;
 import com.quizapp.dto.ErrorResponse;
 import com.quizapp.exception.QuizAppException;
 import com.quizapp.model.User;
+import com.quizapp.server.dao.AttemptDAO;
 import com.quizapp.server.dao.QuestionDAO;
 import com.quizapp.server.dao.QuizDAO;
 import com.quizapp.server.dao.UserDAO;
 import com.quizapp.server.service.AuthService;
+import com.quizapp.server.service.AttemptService;
 import com.quizapp.server.service.QuizService;
 import com.quizapp.server.web.AdminController;
+import com.quizapp.server.web.StudentController;
+import java.time.Clock;
 import com.quizapp.server.web.Auth;
 import com.quizapp.server.web.AuthController;
 import io.javalin.Javalin;
@@ -38,7 +42,11 @@ public class ServerMain {
         // DAOs -> services -> controllers
         UserDAO userDAO = new UserDAO(db);
         AuthService authService = new AuthService(userDAO, new SessionStore());
-        QuizService quizService = new QuizService(new QuizDAO(db), new QuestionDAO(db));
+        QuizDAO quizDAO = new QuizDAO(db);
+        QuestionDAO questionDAO = new QuestionDAO(db);
+        QuizService quizService = new QuizService(quizDAO, questionDAO);
+        AttemptService attemptService = new AttemptService(quizDAO, questionDAO, new AttemptDAO(db),
+                Clock.systemUTC());
 
         if (authService.ensureAdminExists(config.getAdminUsername(), config.getAdminPassword())) {
             LOG.info("Created admin account '{}'", config.getAdminUsername());
@@ -50,6 +58,7 @@ public class ServerMain {
 
         AuthController authController = new AuthController(authService);
         AdminController adminController = new AdminController(quizService);
+        StudentController studentController = new StudentController(attemptService);
 
         Javalin app = Javalin.create(javalin -> {
             javalin.staticFiles.add("/public", Location.CLASSPATH); // index.html, live.html
@@ -78,6 +87,13 @@ public class ServerMain {
         app.post("/api/admin/quizzes/{id}/questions", adminController::addQuestion);
         app.put("/api/admin/questions/{qid}", adminController::updateQuestion);
         app.delete("/api/admin/questions/{qid}", adminController::deleteQuestion);
+
+        app.get("/api/quizzes", studentController::availableQuizzes);
+        app.post("/api/quizzes/{id}/start", studentController::start);
+        app.put("/api/attempts/{id}/progress", studentController::progress);
+        app.post("/api/attempts/{id}/submit", studentController::submit);
+        app.get("/api/attempts/{id}/review", studentController::review);
+        app.get("/api/me/attempts", studentController::history);
 
         // Errors -> {"error": "..."} with the right status code.
         // e.getHttpStatus() is resolved at runtime by the real exception class (dynamic method dispatch).
