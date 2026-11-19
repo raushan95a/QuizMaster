@@ -20,6 +20,7 @@ java Project/
 ├── Dockerfile, .dockerignore, .gitignore
 ├── docs/
 ├── data/                                    quiz.db (local dev, git-ignored)
+├── reference/                               your syllabus PDF + rubric (git-ignored)
 └── src/
     ├── main/java/com/quizapp/
     │   ├── model/       Role, User (abstract), Admin, Student, Quiz, Question, Attempt, Gradable
@@ -90,7 +91,7 @@ StudentDashboard → POST /api/quizzes/{id}/start → attemptId, timeLimitSec, s
 QuizView: QuizTimer thread ticks every second (Platform.runLater updates label; at 0 → submit)
           option chosen → AnswerQueue.put()  ─►  AutoSaveThread.take()
                                                    ├─ PUT /api/attempts/{id}/progress (live progress)
-                                                   └─ writes autosave/attempt-<id>.dat (FileOutputStream)
+                                                   └─ writes ~/.quizmaster/autosave/attempt-<id>.dat (FileOutputStream)
 submit (button or timer, exactly once) → POST /api/attempts/{id}/submit → server grades → ResultView → ReviewView
 ```
 **Live (WebSocket)**

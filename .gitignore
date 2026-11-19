@@ -1,9 +1,8 @@
 # Build output
 target/
 
-# Local database, backups and auto-save files
+# Local database and backups (created when the server runs)
 data/
-autosave/
 *.db
 *.db-shm
 *.db-wal
@@ -23,8 +22,8 @@ out/
 Thumbs.db
 *.log
 
-# Personal files (not part of the project)
+# Personal files (syllabus, rubric, notes) — not part of the project
+reference/
 *.pdf
-image.png
 CLAUDE.md
 .claude/

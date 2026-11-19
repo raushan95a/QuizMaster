@@ -28,7 +28,8 @@ public class AutoSaveThread extends Thread {
         void onSaved(boolean onServer);
     }
 
-    private static final Path FOLDER = Path.of("autosave");
+    /** Backups live in the user's home folder (e.g. C:\Users\name\.quizmaster\autosave), not in the project. */
+    private static final Path FOLDER = Path.of(System.getProperty("user.home"), ".quizmaster", "autosave");
 
     private final int attemptId;
     private final AnswerQueue queue;
