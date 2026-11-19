@@ -36,9 +36,10 @@ For the viva. Replace class names with exact `File.java:line` references as code
 | Life cycle, priorities | Timer sleeps 1 s per tick; `autoSave.setPriority(Thread.MIN_PRIORITY)` |
 | Synchronization | `synchronized submit()`; `synchronized put/take` in `AnswerQueue` |
 | Inter-thread communication | `wait()` / `notify()` in `AnswerQueue` (producer–consumer); `Platform.runLater` |
-| Byte streams, `FileOutputStream`, `FileInputStream` | `AutoSaveThread` backup file (`DataOutputStream`); reading it back (`DataInputStream`); `ResultExporter` CSV |
+| Byte streams, `FileOutputStream`, `FileInputStream` | `AutoSaveThread` backup file (`DataOutputStream`); reading it back (`DataInputStream`); `ResultExporter` CSV (`FileOutputStream` + UTF-8 bytes); `ClientConfig` reads `config.properties` with `FileInputStream` |
+| Thread pools (extra) | `LiveHub.sender` (single-thread executor sends WebSocket messages); `LiveClient` reconnect scheduler |
 | Delegation event model, listeners | AWT `HelpWindow`: `addActionListener`, `KeyListener`; JavaFX `setOnAction` |
-| `KeyEvent` | Esc in `HelpWindow`; keys 1–4, ←/→ in `QuizView`; Enter in `LoginView` |
+| `KeyEvent` | Esc in `HelpWindow` (AWT); keys 1–4, ←/→, F1 in `QuizView` (JavaFX); Enter in `LoginView` |
 | Adapter classes | `WindowAdapter` in `HelpWindow` |
 
 ## Unit 4 — JDBC and collections
@@ -49,8 +50,9 @@ For the viva. Replace class names with exact `File.java:line` references as code
 | ArrayList, LinkedList | `List<Question>`; `LinkedList` screen history in `SceneManager` |
 | HashSet, TreeSet | answered question ids; sorted subjects |
 | HashMap, Hashtable | answers `HashMap<Integer, Character>`; `SessionStore` (`ConcurrentHashMap`, compared with `Hashtable`) |
-| Vector | activity list in `LiveResultsView` (legacy synchronized list) |
-| ConcurrentHashMap / Set | `LiveHub` subscribers per quiz (thread-safe, used by WebSocket threads) |
+| Vector | `LiveResultsView.activity` — activity log (legacy synchronized list) |
+| ConcurrentHashMap / Set | `LiveHub.watchers` — open WebSocket connections per quiz; `SessionStore` tokens |
+| HashSet (dedupe) | `LiveService.buildState()` — keeps only each student's best attempt |
 | Iterator | `AttemptService.cleanAnswers()` walks the answer map with an `Iterator` |
 | `Collections.shuffle` | `AttemptService.start()` — `shuffle(list, new Random(attemptId))`: new order per attempt, same order on resume |
 
@@ -59,11 +61,12 @@ For the viva. Replace class names with exact `File.java:line` references as code
 |---|---|
 | Generic class / interface / hierarchy | `Repository<T>` implemented by DAOs; `Pair<K, V>` |
 | Generic method | `ApiClient.<T>post(path, body, Class<T>)`; `Async.run(Callable<T>, …)` |
-| Wildcards | `ResultExporter.export(List<? extends Gradable>)` |
+| Wildcards | `ResultExporter.averagePercentage(List<? extends Gradable>)` |
+| Generic method (static, two places) | `LiveResultsView.column(...)`, `HistoryView.column(...)` build table columns for any row type |
 | JavaFX skeleton | `App extends Application`, `start(Stage)` |
 | Controls | `RadioButton`, `ListView`, `ComboBox`, `TextField`, `TableView`, `Spinner` |
 | Effects & transforms | `DropShadow` on quiz cards; `FadeTransition` + `ScaleTransition` on the result |
-| Menus, toolbar | `MenuBar` with icon `MenuItem`s; admin `ToolBar` |
+| Menus, toolbar | `MainMenu` — `MenuBar`/`Menu`/`MenuItem` with images drawn by `MenuIcons` (Canvas → Image); admin `ToolBar` |
 
 ## Beyond the syllabus (worth mentioning)
 | Topic | Where |

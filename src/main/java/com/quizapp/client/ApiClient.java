@@ -28,6 +28,11 @@ public final class ApiClient {
     private ApiClient() {
     }
 
+    /** The shared JSON mapper (also used by LiveClient). */
+    static ObjectMapper json() {
+        return JSON;
+    }
+
     // ---- GET (overloaded: plain class, or generic type such as List<QuizSummary>) ----
 
     public static <T> T get(String path, Class<T> type) throws QuizAppException {

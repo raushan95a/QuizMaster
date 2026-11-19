@@ -1,6 +1,7 @@
 package com.quizapp.client.ui;
 
 import com.quizapp.client.ApiClient;
+import com.quizapp.client.awt.HelpWindow;
 import com.quizapp.client.thread.AnswerQueue;
 import com.quizapp.client.thread.AutoSaveThread;
 import com.quizapp.client.thread.QuizTimer;
@@ -137,7 +138,7 @@ public class QuizView implements QuizTimer.Listener, AutoSaveThread.StatusListen
         HBox bottom = new HBox(12, prevButton, navPane, nextButton);
         bottom.setAlignment(Pos.CENTER);
 
-        Label hint = new Label("Keys: 1-4 choose an answer,  ← / → move between questions");
+        Label hint = new Label("Keys: 1-4 choose an answer,  ← / → move between questions,  F1 help");
         hint.getStyleClass().add("muted");
 
         VBox content = new VBox(14, top, progressRow, questionCard, bottom, hint);
@@ -170,6 +171,9 @@ public class QuizView implements QuizTimer.Listener, AutoSaveThread.StatusListen
             event.consume();
         } else if (code == KeyCode.LEFT) {
             showQuestion(index - 1);
+            event.consume();
+        } else if (code == KeyCode.F1) {
+            HelpWindow.showWindow(); // AWT help window
             event.consume();
         }
     }

@@ -42,9 +42,12 @@ public class AdminDashboard {
         publishButton.setOnAction(e -> togglePublish());
         Button refreshButton = new Button("Refresh");
         refreshButton.setOnAction(e -> loadQuizzes());
+        Button liveButton = new Button("● Live Results");
+        liveButton.setOnAction(e -> SceneManager.show(
+                new LiveResultsView(table.getSelectionModel().getSelectedItem()).build(), "Live Results"));
 
         ToolBar toolBar = new ToolBar(newButton, new Separator(), editButton, deleteButton, publishButton,
-                new Separator(), refreshButton);
+                new Separator(), liveButton, refreshButton);
 
         buildTable();
         updateButtons();

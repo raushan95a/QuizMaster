@@ -30,6 +30,21 @@ Use the hosted server instead of localhost:
 .\mvnw.cmd javafx:run "-Dserver.url=https://your-app.up.railway.app"
 ```
 
+## Live demo over Wi-Fi (no internet needed)
+1. Connect your laptop and every demo device (classmates' laptops, faculty phone) to the **same Wi-Fi or phone hotspot**.
+2. Start the server on your laptop. It prints the addresses to use, for example:
+   ```
+   On this network: app -Dserver.url=http://10.7.137.162:7070   live page: http://10.7.137.162:7070/live.html
+   ```
+3. Faculty open the **live page** link on their phone (pick the quiz from the list), or use
+   Admin → **● Live Results** → **Copy link** / **Open in browser**.
+4. Classmates run the app pointed at your laptop:
+   ```
+   .\mvnw.cmd javafx:run "-Dserver.url=http://10.7.137.162:7070"
+   ```
+5. If phones cannot connect, allow Java through Windows Firewall (Private networks) when Windows asks,
+   or check that all devices are on the same network.
+
 ## Server settings (environment variables)
 | Variable | Default | Meaning |
 |---|---|---|

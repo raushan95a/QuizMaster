@@ -34,6 +34,30 @@ public class ServerMain {
         Config config = Config.fromEnvironment();
         createApp(config).start(config.getPort());
         LOG.info("QuizMaster server running on port {} ({} mode)", config.getPort(), config.isDev() ? "dev" : "prod");
+        // Addresses other devices on the same Wi-Fi can use (for the demo)
+        for (String ip : lanAddresses()) {
+            LOG.info("On this network: app -Dserver.url=http://{}:{}   live page: http://{}:{}/live.html",
+                    ip, config.getPort(), ip, config.getPort());
+        }
+    }
+
+    private static java.util.List<String> lanAddresses() {
+        java.util.List<String> result = new java.util.ArrayList<>();
+        try {
+            for (java.net.NetworkInterface nic : java.util.Collections.list(java.net.NetworkInterface.getNetworkInterfaces())) {
+                if (!nic.isUp() || nic.isLoopback() || nic.isVirtual()) {
+                    continue;
+                }
+                for (java.net.InetAddress a : java.util.Collections.list(nic.getInetAddresses())) {
+                    if (a instanceof java.net.Inet4Address && a.isSiteLocalAddress()) {
+                        result.add(a.getHostAddress());
+                    }
+                }
+            }
+        } catch (java.net.SocketException ignored) {
+            // no network information available
+        }
+        return result;
     }
 
     /** Builds the whole server (separate from main so tests can start it too). */

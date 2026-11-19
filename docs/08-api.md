@@ -9,8 +9,10 @@ Errors: `{"error": "message"}` with status 400 / 401 / 403 / 404 / 409 / 500.
 | GET | `/health` | → `{"status":"UP"}` |
 | POST | `/api/auth/register` | `{fullName, username, password}` → 201 `{token, user}` |
 | POST | `/api/auth/login` | `{username, password}` → `{token, user:{id, username, fullName, role}}` |
+| GET | `/api/live` | → published quizzes `[{id, title}]` (quiz chooser on the live page) |
 | GET | `/api/live/{quizId}` | → `LiveState` |
-| WS | `/ws/live?quiz={quizId}` | server pushes `LiveState` on connect and after every change |
+| WS | `/ws/live?quiz={quizId}` | server pushes `LiveState` on connect and after every start / auto-save / submit |
+| GET | `/live.html?quiz={quizId}` | the live page (without `?quiz` it shows a quiz chooser) |
 
 ## Any logged-in user
 | Method | Path | Response |
@@ -27,7 +29,7 @@ Errors: `{"error": "message"}` with status 400 / 401 / 403 / 404 / 409 / 500.
 | POST | `/api/admin/quizzes/{id}/publish` · `/unpublish` | → quiz |
 | POST | `/api/admin/quizzes/{id}/questions` | `{text, optionA, optionB, optionC, optionD, correctOption}` → 201 question |
 | PUT / DELETE | `/api/admin/questions/{qid}` | update / 204 |
-| GET | `/api/admin/quizzes/{id}/results` | → `[{studentName, score, total, timeTakenSec, submittedAt, autoSubmitted}]` |
+| GET | `/api/admin/quizzes/{id}/results` | → every submitted attempt, best first (same shape as a submit result, with `studentName`) — used for CSV export |
 
 ## Student
 | Method | Path | Body → Response |
