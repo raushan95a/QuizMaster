@@ -18,4 +18,13 @@ final class RequestUtil {
             throw new ValidationException("Invalid request body");
         }
     }
+
+    /** Reads a number from the URL path, e.g. the 5 in /api/admin/quizzes/5. */
+    static int intParam(Context ctx, String name) throws ValidationException {
+        try {
+            return Integer.parseInt(ctx.pathParam(name));
+        } catch (NumberFormatException e) {
+            throw new ValidationException("Invalid " + name + " in URL");
+        }
+    }
 }
