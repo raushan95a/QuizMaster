@@ -25,4 +25,5 @@ Dev admin login: `admin` / `admin123`. More in [docs/07-setup.md](docs/07-setup.
 ## Docs
 [Overview](docs/01-overview.md) · [Architecture](docs/02-architecture.md) · [Database](docs/03-database.md) ·
 [Screens](docs/04-ui-screens.md) · [Syllabus mapping](docs/05-syllabus-mapping.md) · [Roadmap](docs/06-roadmap.md) ·
-[Setup](docs/07-setup.md) · [API](docs/08-api.md) · [Deployment](docs/09-deployment.md)
+[Setup](docs/07-setup.md) · [API](docs/08-api.md) · [Deployment](docs/09-deployment.md) ·
+[Viva guide](docs/10-viva-guide.md)
