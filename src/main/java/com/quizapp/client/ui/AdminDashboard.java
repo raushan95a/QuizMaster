@@ -46,8 +46,12 @@ public class AdminDashboard {
         liveButton.setOnAction(e -> SceneManager.show(
                 new LiveResultsView(table.getSelectionModel().getSelectedItem()).build(), "Live Results"));
 
+        Button chartsButton = new Button("Charts");
+        chartsButton.setOnAction(e -> SceneManager.show(
+                new StatsView(table.getSelectionModel().getSelectedItem()).build(), "Charts"));
+
         ToolBar toolBar = new ToolBar(newButton, new Separator(), editButton, deleteButton, publishButton,
-                new Separator(), liveButton, refreshButton);
+                new Separator(), liveButton, chartsButton, refreshButton);
 
         buildTable();
         updateButtons();

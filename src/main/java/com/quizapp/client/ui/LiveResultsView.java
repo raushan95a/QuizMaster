@@ -69,7 +69,8 @@ public class LiveResultsView implements LiveClient.Handler {
         Label title = new Label("Live results");
         title.getStyleClass().add("screen-title");
         quizBox.setPromptText("Choose a quiz");
-        quizBox.setOnAction(e -> watch(quizBox.getValue()));
+        // Listener on the value: runs whether the user picks a quiz or the code selects one
+        quizBox.valueProperty().addListener((obs, oldQuiz, newQuiz) -> watch(newQuiz));
         statusLabel.getStyleClass().add("muted");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);

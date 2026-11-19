@@ -36,7 +36,8 @@ Online deployment is postponed; the demo runs on a local server over Wi-Fi (see 
 - [ ] Fill exact line references in `05-syllabus-mapping.md` (before the viva)
 
 ## Stretch
-- [ ] Charts · CSV question import · dark theme · QR code for the live link
+- [x] Charts — admin "Charts" screen: score-range `BarChart` + pass/fail `PieChart` + average/highest/lowest
+- [ ] CSV question import · dark theme · QR code for the live link
 - [ ] Auto-generate quiz from a unit PPT (Apache POI + AI → draft quiz for faculty review) — see `01-overview.md`
 
 ## Pre-demo checklist

@@ -72,7 +72,7 @@ live link sees the leaderboard update in real time.
 - [ ] AWT Help window, JavaFX effects, menus with icons
 
 **Outstanding — stretch goals**
-- [ ] Charts (score distribution)
+- [x] Charts (score distribution, pass/fail)
 - [ ] Import questions from CSV
 - [ ] Dark / light theme
 - [ ] QR code of the live link
