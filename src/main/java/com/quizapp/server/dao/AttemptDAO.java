@@ -71,7 +71,8 @@ public class AttemptDAO implements Repository<Attempt> {
 
     /** A student's submitted attempts, newest first. */
     public List<Attempt> findSubmittedByUser(int userId) throws QuizAppException {
-        return query(SELECT + "WHERE a.user_id = ? AND a.status = 'SUBMITTED' ORDER BY a.id DESC", userId);
+        return query(SELECT + "WHERE a.user_id = ? AND a.status = 'SUBMITTED' "
+                + "ORDER BY a.submitted_at DESC, a.id DESC", userId);
     }
 
     /** Submitted attempts of a quiz, best first (highest score, then fastest). */
